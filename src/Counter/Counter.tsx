@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import {Settings} from '../Settings/Settings';
+import {Button} from '../Button/Button';
 
 export function Counter () {
 
     const [currentValue, setCurrentValue] = useState<number>(0);
+    const [maxValue, setMaxValue] = useState<number>(1);
+    const [minValue, setMinValue] = useState<number>(0);
     const [isSetMode, changeSetMode] = useState<boolean>(true);
 
     const incrementCurrentValue = () => {
@@ -11,37 +14,47 @@ export function Counter () {
     }
 
     const resetCurrentValue = () => {
-        setCurrentValue(0)
+        setCurrentValue(minValue)
     }
 
     const setSettings = () => {
+        setCurrentValue(minValue)
         changeSetMode(!isSetMode)
     }
 
-    const isIncDisable = currentValue >= 5;
+    const isIncDisable = currentValue >= maxValue;
 
+    const setMinVal = (value: number) => {setMinValue(value)};
+    const setMaxVal = (value: number) => {setMaxValue(value)};
 
+    const classForStopCounting = isIncDisable ? 'display__value stop-counting' : 'display__value';
+    const isInCorrectSettings = minValue >= maxValue || minValue < 0 || maxValue <= 0;
     return (
         <div className="counter-block">
             <div className="display">
                 {
                     isSetMode
-                        ? <Settings/>
-                    : <div className="display__value">
+                        ? <Settings
+                            setMinValue={setMinVal}
+                            setMaxValue={setMaxVal}
+                            maxValue={maxValue}
+                            minValue={minValue}
+                            isIncorrectSettings={isInCorrectSettings}/>
+                    : <div className={classForStopCounting}>
                     {currentValue}
                     </div>
                 }
             </div>
             <div className="buttons-block">
-                <button className="button" onClick={incrementCurrentValue} disabled={isIncDisable}>
+                <Button className="button" onClick={incrementCurrentValue} disabled={isIncDisable || isSetMode}>
                     inc
-                </button>
-                <button className="button" onClick={resetCurrentValue}>
+                </Button>
+                <Button className="button" onClick={resetCurrentValue} disabled={isSetMode}>
                     reset
-                </button>
-                <button className="button" onClick={setSettings}>
+                </Button>
+                <Button className="button" onClick={setSettings} disabled={isInCorrectSettings}>
                     set
-                </button>
+                </Button>
 
             </div>
         </div>

@@ -47,7 +47,15 @@
     color: #60D2F6;
     font-size: 60px;
 }
+.stop-counting{
+    color:red;
+}
 .button:disabled {
     opacity: 0.5;
+}
+.incorrect-settings {
+    background-color: darksalmon;
+    border: 2px solid red;
+    color: red;
 }
 
