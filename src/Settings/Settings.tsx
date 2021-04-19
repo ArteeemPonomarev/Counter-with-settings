@@ -22,8 +22,8 @@ export const Settings:React.FC<SettingsPropsType> = (props) => {
 
     return(
         <div>
-            <div>maxValue: <input type="number" onChange={changeMaxValue} value={props.maxValue} className={classForIncorrectSettings}/></div>
-            <div>minValue: <input type="number" onChange={changeMinValue} value={props.minValue} className={classForIncorrectSettings}/></div>
+            <div className='input-field'>maxValue: <input type="number" onChange={changeMaxValue} value={props.maxValue} className={classForIncorrectSettings}/></div>
+            <div className='input-field'>startValue: <input type="number" onChange={changeMinValue} value={props.minValue} className={classForIncorrectSettings}/></div>
 
         </div>
     )

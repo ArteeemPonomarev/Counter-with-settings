@@ -1,4 +1,4 @@
-.App {
+.wrapper {
     height: 100vh;
     background-color: #2A2C36;
     display: flex;
@@ -57,5 +57,8 @@
     background-color: darksalmon;
     border: 2px solid red;
     color: red;
+}
+.input-field{
+    color: #60D2F6;
 }
 

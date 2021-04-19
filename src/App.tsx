@@ -1,11 +1,15 @@
 import React from 'react';
 import './App.css';
-import {Counter} from './Counter/Counter';
+import {CounterSecond} from './Counter2/CounterSecond';
+import {CounterFirst} from './Counter1/CounterFirst';
 
 function App() {
     return (
         <div className="App">
-            <Counter/>
+            <div className="wrapper">
+            <CounterFirst/>
+            {/*<CounterSecond/>*/}
+            </div>
         </div>
     );
 }

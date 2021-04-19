@@ -1,13 +1,35 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Settings} from '../Settings/Settings';
 import {Button} from '../Button/Button';
 
 export function Counter () {
 
-    const [currentValue, setCurrentValue] = useState<number>(0);
     const [maxValue, setMaxValue] = useState<number>(1);
     const [minValue, setMinValue] = useState<number>(0);
-    const [isSetMode, changeSetMode] = useState<boolean>(true);
+    const [currentValue, setCurrentValue] = useState<number>(minValue);
+    const [isSetMode, changeSetMode] = useState<boolean>(false);
+
+    useEffect(() => {
+        getInitDataFromLS();
+    },[])
+
+    useEffect(() => {
+        localStorage.setItem('startValue', JSON.stringify(minValue));
+        localStorage.setItem('maxValue', JSON.stringify(maxValue));
+    },[minValue, maxValue]);
+
+
+    const getInitDataFromLS = () => {
+        let startValueFromLS = localStorage.getItem('startValue');
+        let maxValueFromLS = localStorage.getItem('maxValue');
+        if(startValueFromLS) {
+            setMinValue(Number(JSON.parse(startValueFromLS)));
+            setCurrentValue(Number(JSON.parse(startValueFromLS)))
+        }
+        if(maxValueFromLS) {
+            setMaxValue(Number(JSON.parse(maxValueFromLS)));
+        }
+    }
 
     const incrementCurrentValue = () => {
         setCurrentValue(currentValue + 1)
@@ -46,12 +68,18 @@ export function Counter () {
                 }
             </div>
             <div className="buttons-block">
+                {
+                    !isSetMode &&
                 <Button className="button" onClick={incrementCurrentValue} disabled={isIncDisable || isSetMode}>
                     inc
                 </Button>
-                <Button className="button" onClick={resetCurrentValue} disabled={isSetMode}>
-                    reset
-                </Button>
+                }
+                {
+                    !isSetMode &&
+                    <Button className="button" onClick={resetCurrentValue} disabled={isSetMode}>
+                        reset
+                    </Button>
+                }
                 <Button className="button" onClick={setSettings} disabled={isInCorrectSettings}>
                     set
                 </Button>
